@@ -23,6 +23,11 @@ services:
 
 ###> doctrine/doctrine-bundle ###
   database:
+    volumes:
+      - ./docker/postgres/pg-init-scripts:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=app,app_test
     ports:
       - "5432"
 ###< doctrine/doctrine-bundle ###
+

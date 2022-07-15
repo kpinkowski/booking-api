@@ -20,5 +20,21 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Repository\UserRepository:
+        public: true
+        arguments:
+            - '@doctrine'
+            - 'App\Entity\User'
+
+    App\Repository\BookingRepository:
+        public: true
+        arguments:
+            - '@doctrine'
+            - 'App\Entity\Booking'
+
+    App\Service\BookingService:
+        public: true
+        arguments:
+            - '@App\Repository\BookingRepository'
+            - '@doctrine.orm.entity_manager'
+            - '@knp_paginator'
