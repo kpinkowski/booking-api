@@ -9,6 +9,7 @@ use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use DateTime;
 
 class BookingService implements BookingServiceInterface
 {

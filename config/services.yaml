@@ -38,3 +38,8 @@ services:
             - '@App\Repository\BookingRepository'
             - '@doctrine.orm.entity_manager'
             - '@knp_paginator'
+
+    App\Manager\VacancySlotManager:
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'

@@ -20,6 +20,11 @@ class Vacancy
     #[ORM\Column]
     private ?int $slots = null;
 
+    public function __construct()
+    {
+        $this->slots = 0;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

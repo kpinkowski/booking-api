@@ -35,4 +35,9 @@ class BookingController extends AbstractController
             'perPage' => $pagination->getItemNumberPerPage(),
         ]);
     }
+
+    public function book(Request $request): JsonResponse
+    {
+
+    }
 }

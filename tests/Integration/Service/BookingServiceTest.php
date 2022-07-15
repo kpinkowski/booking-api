@@ -11,16 +11,15 @@ use App\Service\BookingServiceInterface;
 use App\Tests\Common\TestCase\IntegrationTestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Assert;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BookingServiceTest extends IntegrationTestCase
 {
-    private ContainerInterface $container;
     private BookingServiceInterface $bookingService;
     private EntityManagerInterface $entityManager;
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->bookingService = $this->container->get(BookingService::class);
         $this->userRepository = $this->container->get(UserRepository::class);
         $this->entityManager = $this->container->get('doctrine.orm.entity_manager');
