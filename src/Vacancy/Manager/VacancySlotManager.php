@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Manager;
+namespace App\Vacancy\Manager;
 
 use App\Entity\Vacancy;
 use App\Exception\NegativeSlotException;

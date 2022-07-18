@@ -32,14 +32,20 @@ services:
             - '@doctrine'
             - 'App\Entity\Booking'
 
-    App\Service\BookingService:
+    App\Booking\Handler\GetAllForUserHandler:
+        public: true
+        arguments:
+            - '@App\Repository\BookingRepository'
+            - '@knp_paginator'
+
+    App\Booking\Handler\BookingHandler:
         public: true
         arguments:
             - '@App\Repository\BookingRepository'
             - '@doctrine.orm.entity_manager'
             - '@knp_paginator'
 
-    App\Manager\VacancySlotManager:
+    App\Vacancy\Manager\VacancySlotManager:
         public: true
         arguments:
             - '@doctrine.orm.entity_manager'

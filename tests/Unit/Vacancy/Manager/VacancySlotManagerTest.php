@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Manager;
+namespace App\Tests\Unit\Vacancy\Manager;
 
 use App\Entity\Vacancy;
 use App\Exception\NegativeSlotException;
-use App\Manager\VacancySlotManager;
+use App\Vacancy\Manager\VacancySlotManager;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;

@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Booking\Handler\BookingHandler;
+use App\Booking\Handler\GetAllForUserHandler;
 use App\Serializer\Normalizer\BookingNormalizer;
-use App\Service\BookingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,11 +13,15 @@ use Symfony\Component\Serializer\Serializer;
 
 class BookingController extends AbstractController
 {
-    private BookingService $bookingService;
+    private GetAllForUserHandler $getAllForUserHandler;
+    private BookingHandler $bookHandler;
 
-    public function __construct(BookingService $bookingService)
-    {
-        $this->bookingService = $bookingService;
+    public function __construct(
+        GetAllForUserHandler $getAllForUserHandler,
+        BookingHandler $bookHandler
+    ) {
+        $this->getAllForUserHandler = $getAllForUserHandler;
+        $this->bookHandler = $bookHandler;
     }
 
     #[Route('api/booking', name: 'app_booking')]
@@ -24,7 +29,7 @@ class BookingController extends AbstractController
     {
         $user = $this->getUser();
         $pageNumber = ($request->get('pageNumber')) ?: 1;
-        $pagination = $this->bookingService->getAllForUser($user, $pageNumber);
+        $pagination = $this->getAllForUserHandler->handle($user, $pageNumber);
         $normalizers = [new BookingNormalizer()];
         $serializer = new Serializer($normalizers);
 
@@ -36,8 +41,9 @@ class BookingController extends AbstractController
         ]);
     }
 
+    #[Route('api/booking/book', name: 'app_booking_book')]
     public function book(Request $request): JsonResponse
     {
-
+        $user = $this->getUser();
     }
 }

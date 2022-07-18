@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Manager;
+namespace App\Tests\Integration\Vacancy\Manager;
 
 use App\Entity\Vacancy;
-use App\Manager\VacancySlotManager;
 use App\Tests\Common\TestCase\IntegrationTestCase;
+use App\Vacancy\Manager\VacancySlotManager;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Assert;
