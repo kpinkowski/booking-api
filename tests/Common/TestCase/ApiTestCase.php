@@ -23,6 +23,13 @@ abstract class ApiTestCase extends WebTestCase
         );
         self::bootKernel();
         $this->container = self::$kernel->getContainer();
+        $this->startTransaction();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        $this->rollbackTransaction();
     }
 
     protected function createAuthenticatedClient($username = 'user', $password = 'password'): KernelBrowser
@@ -49,6 +56,31 @@ abstract class ApiTestCase extends WebTestCase
         $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
 
         return $client;
+    }
+
+    private function startTransaction(): void
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $connection->beginTransaction();
+    }
+
+    private function rollbackTransaction(): void
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $this->cleanUpDatabase();
+        $connection->close();
+    }
+
+    private function cleanUpDatabase(): void
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        if ($connection->isTransactionActive()) {
+            try {
+                while ($connection->getTransactionNestingLevel() > 0) {
+                    $connection->rollback();
+                }
+            } catch (\PDOException $e) {}
+        }
     }
 }
 
