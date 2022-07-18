@@ -1,0 +1,8 @@
+services:
+    App\Vacancy\Manager\VacancySlotManager:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+    
+    App\Vacancy\Finder\VacancyFinder:
+        arguments:
+            - '@App\Repository\VacancyRepository'

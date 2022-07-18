@@ -5,24 +5,15 @@ declare(strict_types=1);
 namespace App\Vacancy\Manager;
 
 use App\Entity\Vacancy;
-use App\Exception\NegativeSlotException;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Vacancy\Exception\NegativeSlotException;
 
 class VacancySlotManager implements VacancySlotManagerInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
     public function increase(Vacancy $vacancy, int $amount): void
     {
         $currentSlotsAmount = $vacancy->getSlots();
         $newSlotsAmount = $currentSlotsAmount + $amount;
         $vacancy->setSlots($newSlotsAmount);
-        $this->entityManager->flush();
     }
 
     public function decrease(Vacancy $vacancy, int $amount): void
@@ -35,6 +26,5 @@ class VacancySlotManager implements VacancySlotManagerInterface
         }
 
         $vacancy->setSlots($newSlotsAmount);
-        $this->entityManager->flush();
     }
 }

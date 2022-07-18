@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Api\Controller;
 
 use App\Repository\BookingRepository;
-use App\Tests\Common\Assert\AssertCorrectBooking;
+use App\Tests\Common\Assert\AssertCorrectBookingResponseItem;
 use App\Tests\Common\Assert\AssertCorrectPaginationStructure;
 use App\Tests\Common\TestCase\ApiTestCase;
 use PHPUnit\Framework\Assert;
@@ -38,7 +38,7 @@ class BookingControllerTest extends ApiTestCase
 
         foreach ($items as $item) {
             $booking = $this->bookingRepository->find($item['id']);
-            AssertCorrectBooking::assert($item, $booking);
+            AssertCorrectBookingResponseItem::assert($item, $booking);
         }
     }
 

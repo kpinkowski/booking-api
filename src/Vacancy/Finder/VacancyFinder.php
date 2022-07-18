@@ -11,7 +11,7 @@ use App\Vacancy\Exception\NotEnoughSlotsForSuchDateException;
 use App\Vacancy\Exception\ThereIsNoVacancyForSuchDateException;
 use DateTime;
 
-class VacancyFinder
+class VacancyFinder implements VacancyFinderInterface
 {
     private VacancyRepository $vacancyRepository;
 
@@ -22,7 +22,7 @@ class VacancyFinder
 
     public function find(DateTime $date, int $amount): Vacancy
     {
-        $vacancy = $this->vacancyRepository->findOneBy(['date' => $date->format(Date::DATE_FORMAT)]);
+        $vacancy = $this->vacancyRepository->findOneBy(['date' => $date]);
 
         if (!$vacancy) {
             throw new ThereIsNoVacancyForSuchDateException($date);

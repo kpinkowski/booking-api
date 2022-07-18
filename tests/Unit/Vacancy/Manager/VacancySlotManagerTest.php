@@ -5,22 +5,19 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Vacancy\Manager;
 
 use App\Entity\Vacancy;
-use App\Exception\NegativeSlotException;
+use App\Vacancy\Exception\NegativeSlotException;
 use App\Vacancy\Manager\VacancySlotManager;
-use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 class VacancySlotManagerTest extends TestCase
 {
-    private EntityManagerInterface $entityManagerMock;
     private VacancySlotManager $vacancySlotManager;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
-        $this->vacancySlotManager = new VacancySlotManager($this->entityManagerMock);
+        $this->vacancySlotManager = new VacancySlotManager();
     }
 
     /** @dataProvider increaseSlotDataProvider */
@@ -28,9 +25,6 @@ class VacancySlotManagerTest extends TestCase
     {
         $vacancy = new Vacancy();
         $vacancy->setSlots($currentSlots);
-        $this->entityManagerMock
-            ->expects(self::once())
-            ->method('flush');
 
         $this->vacancySlotManager->increase($vacancy, $increaseAmount);
 
@@ -42,9 +36,6 @@ class VacancySlotManagerTest extends TestCase
     {
         $vacancy = new Vacancy();
         $vacancy->setSlots($currentSlots);
-        $this->entityManagerMock
-            ->expects(self::once())
-            ->method('flush');
 
         $this->vacancySlotManager->decrease($vacancy, $decreaseAmount);
 

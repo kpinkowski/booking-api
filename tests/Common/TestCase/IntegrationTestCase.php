@@ -33,7 +33,7 @@ abstract class IntegrationTestCase extends KernelTestCase
 
     protected function getEntityManager(): EntityManagerInterface
     {
-        return self::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        return $this->container->get('doctrine.orm.entity_manager');
     }
 
     private function startTransaction(): void
