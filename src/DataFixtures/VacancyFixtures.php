@@ -14,7 +14,7 @@ class VacancyFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= 30; $i++) {
-            $vacancy = $this->createVacancy(new DateTime($i.'-07-2022'), 5);
+            $vacancy = $this->createVacancy(new DateTime($i.'-08-2022'), 5);
             $manager->persist($vacancy);
         }
 
