@@ -1,39 +1,31 @@
-# Symfony Docker
-
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework, with full [HTTP/2](https://symfony.com/doc/current/weblink.html), HTTP/3 and HTTPS support.
-
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+# Booking API
 
 ## Getting Started
 
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/)
 2. Run `docker-compose build --pull --no-cache` to build fresh images
-3. Run `docker-compose up` (the logs will be displayed in the current shell)
+3. Run `docker-compose up -d`
 4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker-compose down --remove-orphans` to stop the Docker containers.
+5. Run doctrine migrations: `docker-compose exec php php bin/console doctrine:migrations:migrate`
+6. Load fixtures: `docker-compose exec php php bin/console doctrine:fixtures:load`
 
-## Features
 
-* Production, development and CI ready
-* Automatic HTTPS (in dev and in prod!)
-* HTTP/2, HTTP/3 and [Preload](https://symfony.com/doc/current/web_link.html) support
-* Built-in [Mercure](https://symfony.com/doc/current/mercure.html) hub
-* [Vulcain](https://vulcain.rocks) support
-* Just 2 services (PHP FPM and Caddy server)
-* Super-readable configuration
+## Troubleshooting
 
-**Enjoy!**
+### Certificate problems
 
-## Docs
+In case of problems with TLS certificate try the following steps:
 
-1. [Build options](docs/build.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Installing Xdebug](docs/xdebug.md)
-6. [Using a Makefile](docs/makefile.md)
-7. [Troubleshooting](docs/troubleshooting.md)
+#### Linux
 
-## Credits
+- `$ sudo docker cp $(docker-compose ps -q caddy):/data/caddy/pki/authorities/local/root.crt /usr/local/share/ca-certificates/root.crt && sudo update-ca-certificates`
 
-Created by [Kévin Dunglas](https://dunglas.fr), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+- `$ sudo chown youruser:yougroup /usr/local/share/ca-certificates/root.crt`
+
+- If you're using Google Chrome, import `/usr/local/share/ca-certificates/root.crt` into  Chrome Settings > Show advanced settings > HTTPS/SSL > Manage Certificates > Authorities
+
+#### Other systems
+
+- https://github.com/dunglas/symfony-docker/blob/main/docs/troubleshooting.md#fix-chromebrave-ssl
+- https://stackoverflow.com/a/15076602/1352334
+
