@@ -40,6 +40,7 @@ class BookingFixtures extends Fixture implements DependentFixtureInterface
         $booking->setStartDate($startDate);
         $booking->setEndDate($endDate);
         $booking->setBookingUser($user);
+        $booking->setAmount(1);
 
         return $booking;
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Common\TestCase;
 
 use App\DataFixtures\UserFixtures;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -23,6 +24,23 @@ abstract class ApiTestCase extends WebTestCase
         );
         self::bootKernel();
         $this->container = self::$kernel->getContainer();
+        $this->startTransaction();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        $this->rollbackTransaction();
+    }
+
+    protected function get(string $service): ?object
+    {
+        return $this::$kernel->getContainer()->get($service);
+    }
+
+    protected function getEntityManager(): EntityManagerInterface
+    {
+        return $this->container->get('doctrine.orm.entity_manager');
     }
 
     protected function createAuthenticatedClient($username = 'user', $password = 'password'): KernelBrowser
@@ -49,6 +67,31 @@ abstract class ApiTestCase extends WebTestCase
         $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
 
         return $client;
+    }
+
+    private function startTransaction(): void
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $connection->beginTransaction();
+    }
+
+    private function rollbackTransaction(): void
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $this->cleanUpDatabase();
+        $connection->close();
+    }
+
+    private function cleanUpDatabase(): void
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        if ($connection->isTransactionActive()) {
+            try {
+                while ($connection->getTransactionNestingLevel() > 0) {
+                    $connection->rollback();
+                }
+            } catch (\PDOException $e) {}
+        }
     }
 }
 

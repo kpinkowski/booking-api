@@ -35,8 +35,8 @@ class BookingNormalizerTest extends TestCase
     public function testItReturnsCorrectDateFormat(): void
     {
         $booking = new Booking();
-        $expectedStartDate = '01-01-2001';
-        $expectedEndDate = '02-01-2001';
+        $expectedStartDate = '2001-01-01';
+        $expectedEndDate = '2001-01-02';
         $booking->setStartDate(new \DateTime($expectedStartDate));
         $booking->setEndDate(new \DateTime($expectedEndDate));
 

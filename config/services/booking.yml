@@ -1,0 +1,14 @@
+services:
+    App\Booking\Handler\GetAllForUserHandler:
+        arguments:
+            - '@App\Repository\BookingRepository'
+            - '@knp_paginator'
+    
+    App\Booking\Handler\BookingHandler:
+        arguments:
+            - '@App\Repository\BookingRepository'
+            - '@App\Vacancy\Finder\VacancyFinder'
+            - '@knp_paginator'
+            - '@doctrine.orm.entity_manager'
+    
+    App\Booking\Formatter\DateRangeFormatter:

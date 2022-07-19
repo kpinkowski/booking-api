@@ -8,7 +8,7 @@ use App\Entity\Booking;
 use PHPUnit\Framework\Assert;
 use DateTime;
 
-class AssertCorrectBooking
+class AssertCorrectBookingResponseItem
 {
     public static function assert(array $item, Booking $booking): void
     {

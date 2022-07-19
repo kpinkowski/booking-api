@@ -2,26 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Service;
+namespace App\Tests\Integration\Booking\Handler;
 
+use App\Booking\Handler\GetAllForUserHandler;
+use App\Booking\Service\BookingServiceInterface;
 use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
-use App\Service\BookingService;
-use App\Service\BookingServiceInterface;
 use App\Tests\Common\TestCase\IntegrationTestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Assert;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class BookingServiceTest extends IntegrationTestCase
+class GetAllForUserHandlerTest extends IntegrationTestCase
 {
-    private ContainerInterface $container;
-    private BookingServiceInterface $bookingService;
+    private GetAllForUserHandler $getAllForUserHandler;
     private EntityManagerInterface $entityManager;
 
     public function setUp(): void
     {
-        $this->bookingService = $this->container->get(BookingService::class);
+        parent::setUp();
+        $this->getAllForUserHandler = $this->container->get(GetAllForUserHandler::class);
         $this->userRepository = $this->container->get(UserRepository::class);
         $this->entityManager = $this->container->get('doctrine.orm.entity_manager');
     }
@@ -34,7 +33,7 @@ class BookingServiceTest extends IntegrationTestCase
                 'username' => UserFixtures::USERNAME
             ]);
 
-        $pagination = $this->bookingService->getAllForUser($user, 1, $expectedPageSize);
+        $pagination = $this->getAllForUserHandler->handle($user, 1, $expectedPageSize);
         Assert::assertCount($expectedPageSize, $pagination->getItems());
     }
 }

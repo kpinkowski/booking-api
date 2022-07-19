@@ -1,0 +1,15 @@
+services:
+    App\Repository\UserRepository:
+        arguments:
+            - '@doctrine'
+            - 'App\Entity\User'
+    
+    App\Repository\BookingRepository:
+        arguments:
+            - '@doctrine'
+            - 'App\Entity\Booking'
+    
+    App\Repository\VacancyRepository:
+        arguments:
+            - '@doctrine'
+            - 'App\Entity\Booking'
