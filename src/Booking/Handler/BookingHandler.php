@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Booking\Handler;
 
-use App\Booking\Exception\WrongDatesException;
 use App\Booking\Formatter\DateRangeFormatter;
 use App\Entity\Booking;
 use App\Entity\User;
