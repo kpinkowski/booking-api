@@ -16,15 +16,15 @@
 
 In case of problems with TLS certificate try the following steps:
 
-#### Linux
+#### Linux``
 
 - `$ sudo docker cp $(docker-compose ps -q caddy):/data/caddy/pki/authorities/local/root.crt /usr/local/share/ca-certificates/root.crt && sudo update-ca-certificates`
 
 - `$ sudo chown youruser:yougroup /usr/local/share/ca-certificates/root.crt`
 
-- If you're using Google Chrome, import `/usr/local/share/ca-certificates/root.crt` into  Chrome Settings > Show advanced settings > HTTPS/SSL > Manage Certificates > Authorities
+- If you're using Google Chrome, import `/usr/local/share/ca-certificates/root.crt` into  Chrome Settings > Show advanced settings > HTTPS/SSL > Manage Certificates > Authorities. Then restart Google Chrome.
 
-#### Other systems
+#### Other systems``
 
 - https://github.com/dunglas/symfony-docker/blob/main/docs/troubleshooting.md#fix-chromebrave-ssl
 - https://stackoverflow.com/a/15076602/1352334

@@ -38,6 +38,7 @@ class BookingHandler
         $booking->setBookingUser($user);
         $booking->setStartDate($startDate);
         $booking->setEndDate($endDate);
+        $booking->setAmount($amount);
 
         $dateRange = $this->dateRangeFormatter->format($startDate, $endDate);
 

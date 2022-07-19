@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Serializer\Normalizer;
 
+use App\Constants\Date;
 use App\Entity\Booking;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -14,8 +15,9 @@ class BookingNormalizer implements NormalizerInterface
         /** @var Booking $object */
         return [
             'id' => $object->getId(),
-            'startDate' => $object->getStartDate()->format('d-m-Y'),
-            'endDate' => $object->getEndDate()->format('d-m-Y'),
+            'startDate' => $object->getStartDate()->format(Date::DATE_FORMAT),
+            'endDate' => $object->getEndDate()->format(Date::DATE_FORMAT),
+            'amount' => $object->getAmount(),
         ];
     }
 

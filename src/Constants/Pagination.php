@@ -6,5 +6,5 @@ namespace App\Constants;
 
 class Pagination
 {
-    public const PER_PAGE = 1;
+    public const PER_PAGE = 10;
 }

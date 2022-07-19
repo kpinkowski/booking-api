@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Common\TestCase;
 
 use App\DataFixtures\UserFixtures;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -30,6 +31,16 @@ abstract class ApiTestCase extends WebTestCase
     {
         parent::tearDown();
         $this->rollbackTransaction();
+    }
+
+    protected function get(string $service): ?object
+    {
+        return $this::$kernel->getContainer()->get($service);
+    }
+
+    protected function getEntityManager(): EntityManagerInterface
+    {
+        return $this->container->get('doctrine.orm.entity_manager');
     }
 
     protected function createAuthenticatedClient($username = 'user', $password = 'password'): KernelBrowser

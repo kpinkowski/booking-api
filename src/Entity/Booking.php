@@ -24,6 +24,9 @@ class Booking
     #[ORM\JoinColumn(nullable: false)]
     private ?User $bookingUser = null;
 
+    #[ORM\Column]
+    private ?int $amount = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class Booking
     public function setBookingUser(?User $bookingUser): self
     {
         $this->bookingUser = $bookingUser;
+
+        return $this;
+    }
+
+    public function getAmount(): ?int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(int $amount): self
+    {
+        $this->amount = $amount;
 
         return $this;
     }
