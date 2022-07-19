@@ -15,6 +15,8 @@ See the Troubleshooting section if there are any problems with the certificate.
 1. Run the docker setup (Steps 1 - 3 from Getting Started section)
 2. Run doctrine migrations: `docker-compose exec php php bin/console doctrine:migrations:migrate --env=test`
 3. Load fixtures: `docker-compose exec php php bin/console doctrine:fixtures:load --env=test`
+4. Run all tests: `docker-compose exec php php bin/phpunit`
+5. Optionally rRun only one testsuite (Unit, Integration and API are available): `docker-compose exec php php bin/phpunit --testsuite Unit`
 
 ## Additional informations
 - You can find postman collection in `docs/collection.json`
